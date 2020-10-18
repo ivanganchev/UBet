@@ -10,10 +10,10 @@ public class Game {
     int id;
     @SerializedName("firstTeam")
     @Expose
-    Team firstTeam;
+    String firstTeam;
     @SerializedName("secondTeam")
     @Expose
-    Team secondTeam;
+    String secondTeam;
     @SerializedName("firstTeamCoef")
     @Expose
     double firstTeamCoef;
@@ -39,19 +39,19 @@ public class Game {
         this.id = id;
     }
 
-    public Team getFirstTeam() {
+    public String getFirstTeam() {
         return firstTeam;
     }
 
-    public void setFirstTeam(Team firstTeam) {
+    public void setFirstTeam(String firstTeam) {
         this.firstTeam = firstTeam;
     }
 
-    public Team getSecondTeam() {
+    public String getSecondTeam() {
         return secondTeam;
     }
 
-    public void setSecondTeam(Team secondTeam) {
+    public void setSecondTeam(String secondTeam) {
         this.secondTeam = secondTeam;
     }
 

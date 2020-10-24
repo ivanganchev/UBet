@@ -17,22 +17,10 @@
             android:gravity="center"
             android:paddingTop="20dp">
 
-            <TextView
-                android:id="@+id/firstTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:text="zvxvxc"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/secondTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:textSize="20sp"
-                android:text="afsfsfs"/>
-
+                <FrameLayout
+                    android:id="@+id/matchesFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
         </LinearLayout>
 
 

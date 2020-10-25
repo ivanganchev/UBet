@@ -50,6 +50,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/accountFragment"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
@@ -59,7 +60,8 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/account_layout_background"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        tools:layout_editor_absoluteX="74dp">
+        tools:layout_editor_absoluteX="74dp"
+        android:orientation="horizontal">
 
     </LinearLayout>
 

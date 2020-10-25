@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case R.id.account:
                         AccountFragment accountFragment = new AccountFragment();
-                        fragmentTransaction.add(R.id.matchesFragment, accountFragment);
+                        fragmentTransaction.replace(R.id.matchesFragment, accountFragment);
                         fragmentTransaction.commit();
                         break;
                     case R.id.settings:
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.matches:
                         MatchesFragment matchesFragment = new MatchesFragment();
-                        fragmentTransaction.add(R.id.matchesFragment, matchesFragment);
+                        fragmentTransaction.replace(R.id.matchesFragment, matchesFragment);
                         fragmentTransaction.commit();
                     default:
                         return true;

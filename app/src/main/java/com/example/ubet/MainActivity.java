@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ubet.fragments.AccountFragment;
 import com.example.ubet.fragments.MatchesFragment;
 import com.example.ubet.models.Response;
 import com.example.ubet.viewmodels.MainActivityViewModel;
@@ -55,11 +56,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 switch(id)
                 {
                     case R.id.account:
-                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();
+                        AccountFragment accountFragment = new AccountFragment();
+                        fragmentTransaction.add(R.id.matchesFragment, accountFragment);
+                        fragmentTransaction.commit();
                         break;
                     case R.id.settings:
                         Toast.makeText(MainActivity.this, "Settings",Toast.LENGTH_SHORT).show();
@@ -68,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "My Cart",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.matches:
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
                         MatchesFragment matchesFragment = new MatchesFragment();
                         fragmentTransaction.add(R.id.matchesFragment, matchesFragment);
                         fragmentTransaction.commit();

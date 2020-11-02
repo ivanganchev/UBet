@@ -10,27 +10,36 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ubet.MainActivity;
 import com.example.ubet.R;
+import com.example.ubet.adapters.MatchesAdapter;
 import com.example.ubet.models.Response;
 import com.example.ubet.viewmodels.MainActivityViewModel;
 
 public class MatchesFragment extends Fragment {
     MainActivityViewModel viewModel;
     TextView textView;
+    MatchesAdapter adapter;
+    RecyclerView rvMatches;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.matches_fragment, container, false);
 
+        rvMatches = (RecyclerView) view.findViewById(R.id.matchesRecyclerView);
+
         viewModel = new MainActivityViewModel();
-        textView = (TextView) view.findViewById(R.id.firstTeam);
 
         viewModel.getMatches().observe(this, new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
-                textView.setText(response.getGames().get(0).getFirstTeam());
+                adapter = new MatchesAdapter(response.getGames());
+                rvMatches.setAdapter(adapter);
+                rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
             }
         });
 

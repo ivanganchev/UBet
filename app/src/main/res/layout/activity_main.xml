@@ -23,44 +23,6 @@
                     android:layout_height="match_parent"/>
         </LinearLayout>
 
-
-
-
-<!--        <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--            android:id="@+id/firstContent"-->
-<!--            android:layout_width="373dp"-->
-<!--            android:layout_height="167dp"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginEnd="0dp"-->
-<!--            android:layout_marginBottom="487dp"-->
-<!--            android:background="@color/cardview_dark_background"-->
-<!--            android:gravity="center">-->
-
-
-<!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-<!--        <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--            android:layout_width="371dp"-->
-<!--            android:layout_height="168dp"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginEnd="0dp"-->
-<!--            android:layout_marginBottom="94dp"-->
-<!--            android:background="@color/cardview_dark_background" />-->
-
-<!--        <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--            android:layout_width="215dp"-->
-<!--            android:layout_height="171dp"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginEnd="68dp"-->
-<!--            android:layout_marginBottom="292dp"-->
-<!--            android:background="@color/cardview_dark_background"-->
-<!--            android:gravity="center" />-->
-
-
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,8 +45,14 @@ public class MatchesMainAdapter  extends RecyclerView.Adapter<MatchesMainAdapter
 
         holder.header.setText(sectionHeader);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(holder.childRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(holder.childRecyclerView.getContext(),
+                LinearLayoutManager.VERTICAL,
+                false);
         holder.childRecyclerView.setLayoutManager(linearLayoutManager);
+
+        holder.childRecyclerView.addItemDecoration(new DividerItemDecoration(holder.childRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL));
+
         MatchesChildAdapter childAdapter = new MatchesChildAdapter(games);
         holder.childRecyclerView.setAdapter(childAdapter);
 

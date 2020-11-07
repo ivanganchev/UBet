@@ -42,6 +42,7 @@ public class MatchesFragment extends Fragment {
             @Override
             public void onChanged(Response response) {
                sections.add(new Section("Live", response.getGames()));
+                sections.add(new Section("Upcoming", response.getGames()));
 
                 adapter = new MatchesMainAdapter(sections);
                 rvMatches.setAdapter(adapter);

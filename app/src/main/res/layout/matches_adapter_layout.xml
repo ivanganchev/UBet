@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/matches_sections_background"
-    android:layout_margin="15dp"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginBottom="15dp"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:background="@drawable/matches_sections_background"
+        >
         <TextView
             android:id="@+id/firstTeam"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="liverpool"
+            android:layout_gravity="start"
             android:layout_margin="10dp"
             android:textSize="15sp"
             android:textColor="#FFFFFF"/>
@@ -25,32 +28,67 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_margin="10dp"
-            android:text="man"
+            android:layout_gravity="end"
             android:textSize="15sp"
             android:textColor="#FFFFFF"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="#686868">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="3"
+        android:background="@drawable/reyclerview_item_bottom">
 
         <TextView
             android:id="@+id/firstTeamCoef"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-            android:textSize="15sp"
-            android:textColor="#FFFFFF"/>
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/reyclerview_item_bottom"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/drawTeamCoef"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/reyclerview_item_bottom"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/secondTeamCoef"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-            android:textSize="15sp"
-            android:textColor="#FFFFFF"/>
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/reyclerview_item_bottom"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
     </LinearLayout>
 
 

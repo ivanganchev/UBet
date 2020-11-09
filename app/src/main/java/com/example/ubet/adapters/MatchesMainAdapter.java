@@ -3,6 +3,7 @@ package com.example.ubet.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,11 @@ public class MatchesMainAdapter  extends RecyclerView.Adapter<MatchesMainAdapter
         Section section = sections.get(position);
         String sectionHeader = section.getHeader();
         List<Game> games = section.getGames();
+        if(section.getHeader().equals("Upcoming")) {
+            holder.headerImage.setImageResource(R.drawable.soccer_ball);
+        } else {
+            holder.headerImage.setImageResource(R.drawable.live_dot);
+        }
 
         holder.header.setText(sectionHeader);
 
@@ -49,9 +55,6 @@ public class MatchesMainAdapter  extends RecyclerView.Adapter<MatchesMainAdapter
                 LinearLayoutManager.VERTICAL,
                 false);
         holder.childRecyclerView.setLayoutManager(linearLayoutManager);
-
-        holder.childRecyclerView.addItemDecoration(new DividerItemDecoration(holder.childRecyclerView.getContext(),
-                DividerItemDecoration.VERTICAL));
 
         MatchesChildAdapter childAdapter = new MatchesChildAdapter(games);
         holder.childRecyclerView.setAdapter(childAdapter);
@@ -67,12 +70,14 @@ public class MatchesMainAdapter  extends RecyclerView.Adapter<MatchesMainAdapter
 
         TextView header;
         RecyclerView childRecyclerView;
+        ImageView headerImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             header = itemView.findViewById(R.id.rvHeader);
             childRecyclerView = itemView.findViewById(R.id.rvChildren);
+            headerImage = itemView.findViewById(R.id.headerImage);
         }
     }
 }

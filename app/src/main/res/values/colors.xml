@@ -3,4 +3,5 @@
     <color name="colorPrimary">#797979</color>
     <color name="colorPrimaryDark">#4c4c4c</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="footballPlayerColor">#282828</color>
 </resources>

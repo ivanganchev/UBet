@@ -47,7 +47,7 @@ public class MatchesFragment extends Fragment {
                 adapter = new MatchesMainAdapter(sections);
                 rvMatches.setAdapter(adapter);
                 rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
-                rvMatches.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+//                rvMatches.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
             }
         });
 

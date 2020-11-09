@@ -42,6 +42,8 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
         firstTeamCoef.setText(Double.toString(game.getFirstTeamCoef()));
         TextView secondTeamCoef = holder.secondTeamCoef;
         secondTeamCoef.setText(Double.toString(game.getSecondTeamCoef()));
+        TextView drawCoef = holder.drawCoef;
+        drawCoef.setText(Double.toString(game.getDrawCoef()));
 
     }
 
@@ -56,6 +58,7 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
         TextView secondTeam;
         TextView firstTeamCoef;
         TextView secondTeamCoef;
+        TextView drawCoef;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +67,7 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             secondTeam = itemView.findViewById(R.id.secondTeam);
             firstTeamCoef = itemView.findViewById(R.id.firstTeamCoef);
             secondTeamCoef = itemView.findViewById(R.id.secondTeamCoef);
+            drawCoef = itemView.findViewById(R.id.drawTeamCoef);
         }
     }
 }

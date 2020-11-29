@@ -5,5 +5,6 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="footballPlayerColor">#282828</color>
     <color name="oddsColor">#787878</color>
+    <color name="transparent">#80FFFFFF</color>
 
 </resources>

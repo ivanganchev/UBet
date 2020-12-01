@@ -25,8 +25,12 @@ import java.text.DecimalFormat;
 
 public class BottomSheetLayout extends BottomSheetDialogFragment {
     SeekBar betBar;
-    TickerView tickerView;
+    TickerView tickerViewBet;
+    TickerView tickerViewWin;
+    TextView teamBetCoef;
     double currentBet;
+    double money;
+
 
     @Nullable
     @Override
@@ -34,17 +38,25 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
 
         View v = inflater.inflate(R.layout.bet_layout, container, false);
         betBar = (SeekBar) v.findViewById(R.id.betBar);
-        tickerView = v.findViewById(R.id.moneyBet);
+        tickerViewBet = v.findViewById(R.id.moneyBet);
+        tickerViewWin = v.findViewById(R.id.moneyWin);
+        teamBetCoef = v.findViewById(R.id.coefMultiplier);
+
         currentBet = 0;
+        money = 0;
+        String teamBet = getArguments().getString("team");
+        double teamCoef = getArguments().getDouble("coef");
+
+        teamBetCoef.setText(Double.toString(teamCoef));
 
         betBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                double money = (double) Math.round(progress * 0.01 * 888);
+                money = (double) Math.round(progress * 0.01 * 888);
                 DecimalFormat df = new DecimalFormat("###.#");
 
-                tickerView.setCharacterLists(TickerUtils.provideNumberList());
-                tickerView.setText("" + df.format(money) + "");
+                tickerViewBet.setCharacterLists(TickerUtils.provideNumberList());
+                tickerViewBet.setText("" + df.format(money) + "");
             }
 
             @Override
@@ -54,7 +66,11 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                double moneyWin = (double) Math.round(seekBar.getProgress() * 0.01 * money);
+                DecimalFormat df = new DecimalFormat("###.#");
 
+                tickerViewWin.setCharacterLists(TickerUtils.provideNumberList());
+                tickerViewWin.setText("" + df.format(moneyWin) + "");
             }
         });
 

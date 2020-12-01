@@ -6,5 +6,6 @@
     <color name="footballPlayerColor">#282828</color>
     <color name="oddsColor">#787878</color>
     <color name="transparent">#80FFFFFF</color>
+    <color name="mainYellowOrangeColor">#FFB700</color>
 
 </resources>

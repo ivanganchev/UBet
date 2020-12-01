@@ -5,6 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/matchesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helvetica"
+            android:text="Matches"
+            android:textAllCaps="false"
+            android:textColor="@color/mainYellowOrangeColor"
+            android:textSize="40sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -12,15 +26,19 @@
             android:layout_height="match_parent"
             android:src="@drawable/soccerplayer"
             app:tint="@color/footballPlayerColor" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/matchesRecyclerView"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toBottomOf="@+id/matchesTitle">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/matchesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="55dp"
+                    android:overScrollMode="never"
+                    />
+        </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

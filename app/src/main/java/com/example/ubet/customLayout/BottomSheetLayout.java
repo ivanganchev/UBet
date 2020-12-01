@@ -66,8 +66,8 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                double moneyWin = (double) Math.round(seekBar.getProgress() * 0.01 * money);
-                DecimalFormat df = new DecimalFormat("###.#");
+                double moneyWin = money * teamCoef;
+                DecimalFormat df = new DecimalFormat("###.##");
 
                 tickerViewWin.setCharacterLists(TickerUtils.provideNumberList());
                 tickerViewWin.setText("" + df.format(moneyWin) + "");

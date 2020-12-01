@@ -1,4 +1,4 @@
- package com.example.ubet.fragments;
+package com.example.ubet.fragments;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -35,6 +35,8 @@ public class MatchesFragment extends Fragment {
     TextView textView;
     RecyclerView rvMatches;
     List<Object> list;
+    List<Game> liveGames;
+    List<Game> upcomingGames;
     MatchesAdapter currentMatchesAdapter;
     List<HeaderItem> headers;
     boolean layoutUp;
@@ -61,6 +63,8 @@ public class MatchesFragment extends Fragment {
             @Override
             public void onChanged(Response response) {
                 setObjectsList(response.getGames(), response.getGames(), headers);
+                liveGames = response.getGames();
+                upcomingGames = response.getGames();
                 currentMatchesAdapter = new MatchesAdapter(list, new MatchesAdapter.ClickListener() {
                     @Override
                     public void onCoefClick(View buttonClicked, int position, MatchesAdapter.ButtonType type) {
@@ -95,16 +99,30 @@ public class MatchesFragment extends Fragment {
 
     private void showBottomSheet(MatchesAdapter.ButtonType type, int positionInList,  List<Game> games, BottomSheetLayout bottomSheet) {
         Bundle bundle = new Bundle();
+        int exactPosition = 0;
+        List<Game> clickedGamesList = null;
+        if (positionInList <= liveGames.size() && positionInList > 0) {
+            exactPosition = positionInList - 1;
+            clickedGamesList = new ArrayList<>(liveGames);
+        } else if (positionInList > liveGames.size()) {
+            exactPosition = positionInList - liveGames.size() - 2;
+            clickedGamesList = new ArrayList<>(upcomingGames);
+        }
         switch(type) {
             case FIRSTTEAMCOEF:
-                bundle.putString("team", games.get(positionInList).getFirstTeam());
-                bundle.putDouble("coef", games.get(positionInList).getFirstTeamCoef());
+                bundle.putString("team", clickedGamesList.get(exactPosition).getFirstTeam());
+                bundle.putDouble("coef", clickedGamesList.get(exactPosition).getFirstTeamCoef());
+                break;
             case SECONDTEAMCOEF:
-                bundle.putString("team", games.get(positionInList).getSecondTeam());
-                bundle.putDouble("coef", games.get(positionInList).getSecondTeamCoef());
+                bundle.putString("team", clickedGamesList.get(exactPosition).getSecondTeam());
+                bundle.putDouble("coef", clickedGamesList.get(exactPosition).getSecondTeamCoef());
+                break;
             case DRAW:
                 bundle.putString("team", "Draw");
-                bundle.putDouble("coef", games.get(positionInList).getDrawCoef());
+                bundle.putDouble("coef", clickedGamesList.get(exactPosition).getDrawCoef());
+                break;
+            default:
+                break;
         }
 
         bottomSheet.setArguments(bundle);

@@ -1,5 +1,7 @@
 package com.example.ubet.fragments;
 
+import android.app.UiAutomation;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -7,12 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchesFragment extends Fragment {
+public class MatchesFragment extends Fragment  {
     MainActivityViewModel viewModel;
     TextView textView;
     RecyclerView rvMatches;
@@ -39,6 +46,7 @@ public class MatchesFragment extends Fragment {
     List<Game> upcomingGames;
     MatchesAdapter currentMatchesAdapter;
     List<HeaderItem> headers;
+    ImageView userBetsButton;
     boolean layoutUp;
 
     @Override
@@ -52,13 +60,21 @@ public class MatchesFragment extends Fragment {
         list = new ArrayList<Object>();
         layoutUp = false;
         rvMatches = (RecyclerView) view.findViewById(R.id.matchesRecyclerView);
-
+        userBetsButton = (ImageView) view.findViewById(R.id.userBetsButton);
 
         BottomSheetLayout bottomSheet = new BottomSheetLayout();
+        FragmentManager fm = getFragmentManager();
+        UserBetsDialogFragment betsFragment = UserBetsDialogFragment.newInstance();
 
+        userBetsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateOpen(v);
+                betsFragment.show(getFragmentManager(), "Bets Fragment");
+            }
+        });
 
         viewModel = new MainActivityViewModel();
-
         viewModel.getMatches().observe(this, new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
@@ -97,7 +113,7 @@ public class MatchesFragment extends Fragment {
 
     }
 
-    private void showBottomSheet(MatchesAdapter.ButtonType type, int positionInList,  List<Game> games, BottomSheetLayout bottomSheet) {
+    private void showBottomSheet(MatchesAdapter.ButtonType type, int positionInList, List<Game> games, BottomSheetLayout bottomSheet) {
         Bundle bundle = new Bundle();
         int exactPosition = 0;
         List<Game> clickedGamesList = null;
@@ -127,6 +143,32 @@ public class MatchesFragment extends Fragment {
 
         bottomSheet.setArguments(bundle);
         bottomSheet.show(getFragmentManager(), "ModalBottomSheet");
+    }
+
+    public void rotateOpen(View view) {
+        RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(300);
+        rotate.setInterpolator(new LinearInterpolator());
+        view.startAnimation(rotate);
+    }
+
+    public void rotateClose(View view) {
+        RotateAnimation rotate = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(300);
+        rotate.setInterpolator(new LinearInterpolator());
+        view.startAnimation(rotate);
+    }
+
+    public void isDialogOpen(UserBetsDialogFragment dialogFragment, View v) {
+
+        if (dialogFragment != null
+                && dialogFragment.getDialog() != null
+                && dialogFragment.getDialog().isShowing()
+                && !dialogFragment.isRemoving()) {
+
+        } else {
+            rotateClose(v);
+        }
     }
 
 }

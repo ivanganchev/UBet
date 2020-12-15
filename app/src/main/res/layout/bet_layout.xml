@@ -123,7 +123,7 @@
 
 
     <Button
-        android:id="@+id/loginSubmit"
+        android:id="@+id/betButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/main_gradient_color_cornered"

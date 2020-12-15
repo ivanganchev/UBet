@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -28,6 +29,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
     TickerView tickerViewBet;
     TickerView tickerViewWin;
     TextView teamBetCoef;
+    Button betButton;
     double currentBet;
     double money;
 
@@ -41,6 +43,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
         tickerViewBet = v.findViewById(R.id.moneyBet);
         tickerViewWin = v.findViewById(R.id.moneyWin);
         teamBetCoef = v.findViewById(R.id.coefMultiplier);
+        betButton = v.findViewById(R.id.betButton);
 
         currentBet = 0;
         money = 0;
@@ -74,6 +77,12 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
             }
         });
 
+        betButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return v;
     }

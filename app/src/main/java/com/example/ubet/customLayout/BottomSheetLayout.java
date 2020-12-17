@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import com.example.ubet.Classes.UserBet;
 import com.example.ubet.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.robinhood.ticker.TickerUtils;
@@ -23,6 +25,8 @@ import com.robinhood.ticker.TickerView;
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BottomSheetLayout extends BottomSheetDialogFragment {
     SeekBar betBar;
@@ -32,6 +36,8 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
     Button betButton;
     double currentBet;
     double money;
+    double moneyWin;
+    List<UserBet> userBets;
 
 
     @Nullable
@@ -44,6 +50,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
         tickerViewWin = v.findViewById(R.id.moneyWin);
         teamBetCoef = v.findViewById(R.id.coefMultiplier);
         betButton = v.findViewById(R.id.betButton);
+        userBets = new ArrayList<UserBet>();
 
         currentBet = 0;
         money = 0;
@@ -56,6 +63,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 money = (double) Math.round(progress * 0.01 * 888);
+
                 DecimalFormat df = new DecimalFormat("###.#");
 
                 tickerViewBet.setCharacterLists(TickerUtils.provideNumberList());
@@ -69,7 +77,14 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                double moneyWin = money * teamCoef;
+                moneyWin = money * teamCoef;
+                if(money > 0) {
+                    betButton.setEnabled(true);
+                    betButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.main_gradient_color_cornered));
+                } else {
+                    betButton.setEnabled(false);
+                    betButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.disabled_color));
+                }
                 DecimalFormat df = new DecimalFormat("###.##");
 
                 tickerViewWin.setCharacterLists(TickerUtils.provideNumberList());

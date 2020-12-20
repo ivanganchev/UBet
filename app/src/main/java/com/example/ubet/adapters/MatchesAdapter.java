@@ -115,7 +115,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public VHItem(@NonNull View itemView) {
             super(itemView);
 
-            //itemView.setOnClickListener(this);
             firstTeam = itemView.findViewById(R.id.firstTeam);
             secondTeam = itemView.findViewById(R.id.secondTeam);
             firstTeamCoef = itemView.findViewById(R.id.firstTeamCoef);

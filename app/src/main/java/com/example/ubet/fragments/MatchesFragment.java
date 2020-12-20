@@ -1,9 +1,5 @@
 package com.example.ubet.fragments;
 
-import android.app.UiAutomation;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,33 +8,32 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ubet.Classes.HeaderItem;
+import com.example.ubet.Classes.UserBet;
+import com.example.ubet.MainActivity;
 import com.example.ubet.R;
-import com.example.ubet.Section;
 import com.example.ubet.adapters.MatchesAdapter;
 import com.example.ubet.customLayout.BottomSheetLayout;
 import com.example.ubet.models.Game;
 import com.example.ubet.models.Response;
+import com.example.ubet.viewmodels.BetsViewModel;
 import com.example.ubet.viewmodels.MainActivityViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MatchesFragment extends Fragment  {
-    MainActivityViewModel viewModel;
+    MainActivityViewModel mainActivityViewModel;
     TextView textView;
     RecyclerView rvMatches;
     List<Object> list;
@@ -48,6 +43,8 @@ public class MatchesFragment extends Fragment  {
     List<HeaderItem> headers;
     ImageView userBetsButton;
     boolean layoutUp;
+    private BetsViewModel betsViewModel;
+    List<UserBet> userBets;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,21 +58,33 @@ public class MatchesFragment extends Fragment  {
         layoutUp = false;
         rvMatches = (RecyclerView) view.findViewById(R.id.matchesRecyclerView);
         userBetsButton = (ImageView) view.findViewById(R.id.userBetsButton);
+        userBets = new ArrayList<UserBet>();
 
         BottomSheetLayout bottomSheet = new BottomSheetLayout();
-        FragmentManager fm = getFragmentManager();
-        UserBetsDialogFragment betsFragment = UserBetsDialogFragment.newInstance();
+        FragmentManager fm = getChildFragmentManager();
 
-        userBetsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotateOpen(v);
-                betsFragment.show(getFragmentManager(), "Bets Fragment");
-            }
-        });
+        ArrayList<UserBet> userBets = new ArrayList<UserBet>();
 
-        viewModel = new MainActivityViewModel();
-        viewModel.getMatches().observe(this, new Observer<Response>() {
+        betsViewModel = new ViewModelProvider(requireActivity()).get(BetsViewModel.class);
+        betsViewModel.getUserBet().observe(getViewLifecycleOwner(), new Observer<UserBet>() {
+                    @Override
+                    public void onChanged(UserBet userBet) {
+                        userBets.add(userBet);
+                    }
+                });
+
+                userBetsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rotateOpen(v);
+                        UserBetsDialogFragment betsFragment = UserBetsDialogFragment.newInstance(userBets);
+                        betsFragment.show(getChildFragmentManager(), "Bets Fragment");
+
+                    }
+                });
+
+        mainActivityViewModel = new MainActivityViewModel();
+        mainActivityViewModel.getMatches().observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
                 setObjectsList(response.getGames(), response.getGames(), headers);
@@ -165,7 +174,6 @@ public class MatchesFragment extends Fragment  {
                 && dialogFragment.getDialog() != null
                 && dialogFragment.getDialog().isShowing()
                 && !dialogFragment.isRemoving()) {
-
         } else {
             rotateClose(v);
         }

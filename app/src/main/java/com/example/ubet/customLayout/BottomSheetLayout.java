@@ -1,6 +1,7 @@
 package com.example.ubet.customLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ubet.Classes.UserBet;
 import com.example.ubet.R;
+import com.example.ubet.fragments.MatchesFragment;
+import com.example.ubet.fragments.UserBetsDialogFragment;
+import com.example.ubet.viewmodels.BetsViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -37,7 +43,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
     double currentBet;
     double money;
     double moneyWin;
-    List<UserBet> userBets;
+    BetsViewModel betsViewModel;
 
 
     @Nullable
@@ -50,7 +56,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
         tickerViewWin = v.findViewById(R.id.moneyWin);
         teamBetCoef = v.findViewById(R.id.coefMultiplier);
         betButton = v.findViewById(R.id.betButton);
-        userBets = new ArrayList<UserBet>();
+        betsViewModel = new ViewModelProvider(requireActivity()).get(BetsViewModel.class);
 
         currentBet = 0;
         money = 0;
@@ -66,6 +72,15 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
 
                 DecimalFormat df = new DecimalFormat("###.#");
 
+                moneyWin = money * teamCoef;
+                if(money > 0) {
+                    betButton.setEnabled(true);
+                    betButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.main_gradient_color_cornered));
+                } else {
+                    betButton.setEnabled(false);
+                    betButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.disabled_color));
+                }
+
                 tickerViewBet.setCharacterLists(TickerUtils.provideNumberList());
                 tickerViewBet.setText("" + df.format(money) + "");
             }
@@ -77,14 +92,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                moneyWin = money * teamCoef;
-                if(money > 0) {
-                    betButton.setEnabled(true);
-                    betButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.main_gradient_color_cornered));
-                } else {
-                    betButton.setEnabled(false);
-                    betButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.disabled_color));
-                }
+
                 DecimalFormat df = new DecimalFormat("###.##");
 
                 tickerViewWin.setCharacterLists(TickerUtils.provideNumberList());
@@ -95,7 +103,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
         betButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                betsViewModel.setUserBet(new UserBet(teamCoef, money, teamBet, moneyWin));
             }
         });
 

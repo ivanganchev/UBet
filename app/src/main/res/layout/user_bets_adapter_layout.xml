@@ -3,19 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/userBetTeam"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="12dp"
-        android:layout_gravity="start"/>
+        android:textSize="20dp"
+        android:layout_weight="1"
+        android:layout_gravity="start" />
 
     <TextView
         android:id="@+id/userMoneyBet"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="12dp"
-        android:layout_gravity="end"/>
+        android:layout_weight="1"
+        android:textSize="20dp"
+        android:textAlignment="textEnd"/>
 </LinearLayout>

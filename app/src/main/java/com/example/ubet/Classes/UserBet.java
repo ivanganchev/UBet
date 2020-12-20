@@ -1,6 +1,9 @@
 package com.example.ubet.Classes;
 
-public class UserBet {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserBet implements Parcelable {
     static int currId = 0;
     int id;
     double betCoef;
@@ -16,6 +19,26 @@ public class UserBet {
         this.approxWin = approxWin;
         currId++;
     }
+
+    protected UserBet(Parcel in) {
+        id = in.readInt();
+        betCoef = in.readDouble();
+        moneyBet = in.readDouble();
+        teamName = in.readString();
+        approxWin = in.readDouble();
+    }
+
+    public static final Creator<UserBet> CREATOR = new Creator<UserBet>() {
+        @Override
+        public UserBet createFromParcel(Parcel in) {
+            return new UserBet(in);
+        }
+
+        @Override
+        public UserBet[] newArray(int size) {
+            return new UserBet[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -55,5 +78,19 @@ public class UserBet {
 
     public void setApproxWin(double approxWin) {
         this.approxWin = approxWin;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeDouble(betCoef);
+        dest.writeDouble(moneyBet);
+        dest.writeString(teamName);
+        dest.writeDouble(approxWin);
     }
 }

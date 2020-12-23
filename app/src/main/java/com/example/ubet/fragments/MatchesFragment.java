@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -45,6 +46,8 @@ public class MatchesFragment extends Fragment  {
     boolean layoutUp;
     private BetsViewModel betsViewModel;
     List<UserBet> userBets;
+    ImageView soccerBall;
+    RelativeLayout rvRelativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,11 +62,16 @@ public class MatchesFragment extends Fragment  {
         rvMatches = (RecyclerView) view.findViewById(R.id.matchesRecyclerView);
         userBetsButton = (ImageView) view.findViewById(R.id.userBetsButton);
         userBets = new ArrayList<UserBet>();
+        soccerBall = (ImageView) view.findViewById(R.id.soccerBall);
+        rvRelativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayoutRecyclerView);
 
-        BottomSheetLayout bottomSheet = new BottomSheetLayout();
+        final BottomSheetLayout[] bottomSheet = new BottomSheetLayout[1];
         FragmentManager fm = getChildFragmentManager();
 
         ArrayList<UserBet> userBets = new ArrayList<UserBet>();
+
+        soccerBall.setVisibility(View.VISIBLE);
+        loadingAnimation(soccerBall);
 
         betsViewModel = new ViewModelProvider(requireActivity()).get(BetsViewModel.class);
         betsViewModel.getUserBet().observe(getViewLifecycleOwner(), new Observer<UserBet>() {
@@ -87,22 +95,22 @@ public class MatchesFragment extends Fragment  {
         mainActivityViewModel.getMatches().observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
+                soccerBall.clearAnimation();
+                soccerBall.setVisibility(View.GONE);
+                rvRelativeLayout.setVisibility(View.VISIBLE);
                 setObjectsList(response.getGames(), response.getGames(), headers);
                 liveGames = response.getGames();
                 upcomingGames = response.getGames();
                 currentMatchesAdapter = new MatchesAdapter(list, new MatchesAdapter.ClickListener() {
                     @Override
                     public void onCoefClick(View buttonClicked, int position, MatchesAdapter.ButtonType type) {
-                        Log.e("","");
-                        if(bottomSheet.isAdded()) {
-                            return;
-                        }
-
-                        showBottomSheet(type, position, response.getGames(), bottomSheet);
+                        bottomSheet[0] = new BottomSheetLayout();
+                        showBottomSheet(type, position, response.getGames(), bottomSheet[0]);
                     }
                 });
 
                 rvMatches.setAdapter(currentMatchesAdapter);
+                rvMatches.scheduleLayoutAnimation();
                 rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
             }
         });
@@ -154,21 +162,21 @@ public class MatchesFragment extends Fragment  {
         bottomSheet.show(getFragmentManager(), "ModalBottomSheet");
     }
 
-    public void rotateOpen(View view) {
+    private void rotateOpen(View view) {
         RotateAnimation rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(300);
         rotate.setInterpolator(new LinearInterpolator());
         view.startAnimation(rotate);
     }
 
-    public void rotateClose(View view) {
+    private void rotateClose(View view) {
         RotateAnimation rotate = new RotateAnimation(180, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(300);
         rotate.setInterpolator(new LinearInterpolator());
         view.startAnimation(rotate);
     }
 
-    public void isDialogOpen(UserBetsDialogFragment dialogFragment, View v) {
+    private void isDialogOpen(UserBetsDialogFragment dialogFragment, View v) {
 
         if (dialogFragment != null
                 && dialogFragment.getDialog() != null
@@ -177,6 +185,15 @@ public class MatchesFragment extends Fragment  {
         } else {
             rotateClose(v);
         }
+    }
+
+    private void loadingAnimation(View view) {
+        RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(1500);
+        rotate.setRepeatCount(Animation.INFINITE);
+        rotate.setFillAfter(true);
+
+        view.startAnimation(rotate);
     }
 
 }

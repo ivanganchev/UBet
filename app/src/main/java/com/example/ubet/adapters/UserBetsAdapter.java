@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ubet.Classes.UserBet;
 import com.example.ubet.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class UserBetsAdapter extends RecyclerView.Adapter<UserBetsAdapter.ViewHolder> {
@@ -34,7 +35,8 @@ public class UserBetsAdapter extends RecyclerView.Adapter<UserBetsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserBet userBet = userBets.get(position);
-        holder.teamCoef.setText(String.format("%f" ,userBet.getBetCoef()));
+        DecimalFormat df = new DecimalFormat("###.##");
+        holder.teamCoef.setText(df.format(userBet.getBetCoef()));
         holder.teamName.setText(userBet.getTeamName());
 
     }

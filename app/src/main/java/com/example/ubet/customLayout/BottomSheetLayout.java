@@ -113,10 +113,5 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
-        View v = getLayoutInflater().inflate(R.layout.bet_layout, null);
-        TickerView tickerView = v.findViewById(R.id.moneyBet);
-        tickerView.setCharacterLists(TickerUtils.provideNumberList());
-        tickerView.setText("");
-        Log.e("","");
     }
 }

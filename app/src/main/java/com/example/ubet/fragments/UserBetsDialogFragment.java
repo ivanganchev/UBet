@@ -32,6 +32,7 @@ public class UserBetsDialogFragment extends DialogFragment {
     TextView userBetTeam;
     RecyclerView userBetsRecyclerView;
     List<UserBet> userBets;
+    TextView noBetsText;
 
     public UserBetsDialogFragment() {
 
@@ -55,11 +56,18 @@ public class UserBetsDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        noBetsText = (TextView) view.findViewById(R.id.noBetsText);
+
         userBets = getArguments().getParcelableArrayList("userBets");
-        UserBetsAdapter adapter = new UserBetsAdapter(userBets);
-        userBetsRecyclerView = (RecyclerView) view.findViewById(R.id.activeBetsRecyclerView);
-        userBetsRecyclerView.setAdapter(adapter);
-        userBetsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        if(userBets.size() > 0) {
+
+            noBetsText.setVisibility(View.GONE);
+            UserBetsAdapter adapter = new UserBetsAdapter(userBets);
+            userBetsRecyclerView = (RecyclerView) view.findViewById(R.id.activeBetsRecyclerView);
+            userBetsRecyclerView.setVisibility(View.VISIBLE);
+            userBetsRecyclerView.setAdapter(adapter);
+            userBetsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 
     @Override

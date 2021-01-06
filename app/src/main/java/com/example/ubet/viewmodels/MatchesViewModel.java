@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel;
 import com.example.ubet.models.Response;
 import com.example.ubet.repository.GamesRepository;
 
-public class MainActivityViewModel extends ViewModel {
+public class MatchesViewModel extends ViewModel {
 
     private MutableLiveData<Response> mutableLiveData;
     private GamesRepository repo;
 
-    public MainActivityViewModel () {
+    public MatchesViewModel() {
         repo = new GamesRepository();
     }
 

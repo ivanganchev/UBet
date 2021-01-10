@@ -1,14 +1,10 @@
 package com.example.ubet.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,13 +18,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ubet.MainActivity;
 import com.example.ubet.R;
-import com.example.ubet.models.TokenResponse;
+import com.example.ubet.models.User;
+import com.example.ubet.models.UserResponse;
 import com.example.ubet.viewmodels.RegisterViewModel;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
+import javax.security.auth.callback.Callback;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -41,8 +38,6 @@ public class RegisterFragment extends Fragment {
     EditText emailInput;
     EditText passwordInput;
     RegisterViewModel registerViewModel;
-
-    public static final String SHARED_PREFS = "sharePrefs";
 
     @Nullable
     @Override
@@ -62,33 +57,21 @@ public class RegisterFragment extends Fragment {
                 String username = usernameInput.getText().toString();
                 String email = emailInput.getText().toString();
                 String password = passwordInput.getText().toString();
-                List<EditText> registerInputs = new ArrayList<EditText>();
-                registerInputs.add(usernameInput);
-                registerInputs.add(emailInput);
-                registerInputs.add(passwordInput);
 
                 String requestBody = getRequestBody(username, password, email);
 
                 final RequestBody finalizedBody = RequestBody.create(MediaType.parse("application/json"), requestBody);
 
                 registerViewModel = new ViewModelProvider(requireActivity()).get(RegisterViewModel.class);
-                registerViewModel.register(finalizedBody).observe(getViewLifecycleOwner(), new Observer<TokenResponse>() {
+                registerViewModel.register(finalizedBody).observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
                     @Override
-                    public void onChanged(TokenResponse tokenResponse) {
-                        for(int i = 0; i < registerInputs.size(); i++) {
-                            if(registerInputs.get(i).getText().toString().equals("")) {
-                                shakeAnimation(registerInputs.get(i));
-                            }
-                        }
-                        if(!username.equals("") && !email.equals("") && !password.equals("") && tokenResponse.getToken() != null) {
-                            Toast.makeText(getContext(), tokenResponse.getMessage(), Toast.LENGTH_LONG).show();
-                            saveToken(tokenResponse.getToken());
-                            startActivity(new Intent(getActivity(), MainActivity.class));
-                            getActivity().finish();
-                        }
+                    public void onChanged(UserResponse s) {
+                        Toast.makeText(getContext(), s.getToken(), Toast.LENGTH_LONG).show();
                     }
                 });
 
+
+                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
 
@@ -116,18 +99,5 @@ public class RegisterFragment extends Fragment {
         params.put("email", email);
         String strRequestBody = new Gson().toJson(params);
         return strRequestBody;
-    }
-
-    private void shakeAnimation(View view) {
-        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake_animation);
-        view.startAnimation(shake);
-    }
-
-    private void saveToken(String token) {
-        SharedPreferences sharedPrefs = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
-        editor.putString("token", token);
-
     }
 }

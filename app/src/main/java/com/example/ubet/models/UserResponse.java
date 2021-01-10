@@ -3,18 +3,13 @@ package com.example.ubet.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TokenResponse {
+public class UserResponse {
     @SerializedName("token")
     @Expose
     String token;
 
-    @SerializedName("message")
-    @Expose
-    String message;
-
-    public TokenResponse(String username, String message) {
+    public UserResponse(String username) {
         this.token = username;
-        this.message = message;
     }
 
     public String getToken() {
@@ -23,13 +18,5 @@ public class TokenResponse {
 
     public void setToken(String username) {
         this.token = username;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

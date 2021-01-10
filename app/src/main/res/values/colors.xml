@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#797979</color>
+    <color name="colorPrimary">#14498E</color>
     <color name="colorPrimaryDark">#4c4c4c</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="footballPlayerColor">#282828</color>
-    <color name="oddsColor">#787878</color>
+    <color name="oddsColor">#7E5083</color>
     <color name="transparent">#80FFFFFF</color>
-    <color name="mainYellowOrangeColor">#FFB700</color>
+    <color name="mainColor">#cc6699</color>
 
 </resources>

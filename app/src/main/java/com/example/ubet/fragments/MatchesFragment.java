@@ -154,7 +154,7 @@ public class MatchesFragment extends Fragment  {
 
         for(int count = 0; count < headers.size(); count++) {
             list.add(headers.get(count));
-            for(int i = 0; i < liveGames.size(); i++) {
+            for(int i = 0; i < games.get(count).size(); i++) {
                 list.add(games.get(count).get(i));
             }
         }

@@ -38,7 +38,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Created by vladoTs"
+        android:text="Created by TUtechnologies"
         android:textColor="#AAAAAA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

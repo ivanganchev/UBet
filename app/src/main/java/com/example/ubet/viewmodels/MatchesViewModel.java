@@ -5,21 +5,20 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ubet.models.Response;
-import com.example.ubet.repository.GamesRepository;
+import com.example.ubet.repository.MatchesRepository;
 
 public class MatchesViewModel extends ViewModel {
 
     private MutableLiveData<Response> mutableLiveData;
-    private GamesRepository repo;
+    private MatchesRepository repo;
 
     public MatchesViewModel() {
-        repo = new GamesRepository();
+        repo = new MatchesRepository();
     }
 
-    //Type LiveData provides state of app saving because it's immutable and cannot be changed
-    public LiveData<Response> getMatches() {
+    public LiveData<Response> getMatches(String token) {
         if(mutableLiveData == null)  {
-            mutableLiveData = repo.getMatches();
+            mutableLiveData = repo.getMatches(token);
         }
 
         return mutableLiveData;

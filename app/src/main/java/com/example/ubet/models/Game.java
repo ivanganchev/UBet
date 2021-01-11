@@ -8,24 +8,33 @@ public class Game {
     @SerializedName("id")
     @Expose
     int id;
-    @SerializedName("firstTeam")
+    @SerializedName("homeTeam")
     @Expose
     String firstTeam;
-    @SerializedName("secondTeam")
+    @SerializedName("awayTeam")
     @Expose
     String secondTeam;
-    @SerializedName("firstTeamCoef")
+    @SerializedName("homeOdd")
     @Expose
     double firstTeamCoef;
-    @SerializedName("secondTeamCoef")
+    @SerializedName("awayOdd")
     @Expose
     double secondTeamCoef;
-    @SerializedName("drawCoef")
+    @SerializedName("draw")
     @Expose
     double drawCoef;
-    @SerializedName("startingHour")
+    @SerializedName("homeScore")
     @Expose
-    String startingHour;
+    int firstTeamScore;
+    @SerializedName("awayScore")
+    @Expose
+    int secondTeamScore;
+    @SerializedName("liveResult")
+    @Expose
+    String liveResult;
+    @SerializedName("href")
+    @Expose
+    String href;
 
     public Game() {
 
@@ -79,11 +88,35 @@ public class Game {
         this.drawCoef = drawCoef;
     }
 
-    public String getStartingHour() {
-        return startingHour;
+    public int getFirstTeamScore() {
+        return firstTeamScore;
     }
 
-    public void setStartingHour(String startingHour) {
-        this.startingHour = startingHour;
+    public void setFirstTeamScore(int firstTeamScore) {
+        this.firstTeamScore = firstTeamScore;
+    }
+
+    public int getSecondTeamScore() {
+        return secondTeamScore;
+    }
+
+    public void setSecondTeamScore(int secondTeamScore) {
+        this.secondTeamScore = secondTeamScore;
+    }
+
+    public String getLiveResult() {
+        return liveResult;
+    }
+
+    public void setLiveResult(String liveResult) {
+        this.liveResult = liveResult;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 }

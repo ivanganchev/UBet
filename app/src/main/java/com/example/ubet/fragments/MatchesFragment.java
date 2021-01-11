@@ -122,10 +122,14 @@ public class MatchesFragment extends Fragment  {
 
     private void setObjectsList(List<Game> liveGames, List<Game> upcomingGames,  List<HeaderItem> headers) {
 
+        List<List<Game>> games = new ArrayList<List<Game>>();
+        games.add(liveGames);
+        games.add(upcomingGames);
+
         for(int count = 0; count < headers.size(); count++) {
             list.add(headers.get(count));
             for(int i = 0; i < liveGames.size(); i++) {
-                list.add(liveGames.get(i));
+                list.add(games.get(count).get(i));
             }
         }
     }

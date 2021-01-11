@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ubet.Constants;
 import com.example.ubet.SoccerWebService;
 import com.example.ubet.models.TokenResponse;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -14,8 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RegisterRepository {
-    public MutableLiveData<TokenResponse> register(RequestBody body) {
+public class LoginRepository {
+    public MutableLiveData<TokenResponse> login(RequestBody body) {
         final MutableLiveData<TokenResponse> mutableLiveData = new MutableLiveData<>();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -24,12 +27,22 @@ public class RegisterRepository {
                 .build();
 
         SoccerWebService api = retrofit.create(SoccerWebService.class);
-        Call<TokenResponse> call = api.register(body);
+        Call<TokenResponse> call = api.login(body);
 
         call.enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
-                mutableLiveData.setValue(response.body());
+                if(response.code() != 200) {
+                    Gson gson = new Gson();
+                    try {
+                        TokenResponse tRes = gson.fromJson(response.errorBody().string(), TokenResponse.class);
+                        mutableLiveData.setValue(tRes);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    mutableLiveData.setValue(response.body());
+                }
             }
 
             @Override

@@ -42,8 +42,6 @@ public class RegisterFragment extends Fragment {
     EditText passwordInput;
     RegisterViewModel registerViewModel;
 
-    public static final String SHARED_PREFS = "sharePrefs";
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -124,10 +122,10 @@ public class RegisterFragment extends Fragment {
     }
 
     private void saveToken(String token) {
-        SharedPreferences sharedPrefs = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPrefs = getContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
 
         editor.putString("token", token);
-
+        editor.commit();
     }
 }

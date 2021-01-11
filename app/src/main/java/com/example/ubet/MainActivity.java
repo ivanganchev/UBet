@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -61,14 +64,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.matches:
                         matchesFragment = new MatchesFragment();
                         startNewFragment(matchesFragment, R.id.canvasFragment);
+                        break;
+                    case R.id.logout:
+                        deleteToken();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
                     default:
                         return true;
                 }
                 return true;
             }
         });
-
-
     }
 
     @Override
@@ -85,5 +91,12 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(fragmentId, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void deleteToken() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("token");
+        editor.apply();
     }
 }

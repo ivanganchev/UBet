@@ -1,7 +1,9 @@
 package com.example.ubet.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,20 +23,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ubet.Classes.HeaderItem;
 import com.example.ubet.Classes.UserBet;
-import com.example.ubet.MainActivity;
 import com.example.ubet.R;
 import com.example.ubet.adapters.MatchesAdapter;
 import com.example.ubet.customLayout.BottomSheetLayout;
 import com.example.ubet.models.Game;
 import com.example.ubet.models.Response;
 import com.example.ubet.viewmodels.BetsViewModel;
-import com.example.ubet.viewmodels.MainActivityViewModel;
+import com.example.ubet.viewmodels.MatchesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MatchesFragment extends Fragment  {
-    MainActivityViewModel mainActivityViewModel;
+    MatchesViewModel matchesViewModel;
     TextView textView;
     RecyclerView rvMatches;
     List<Object> list;
@@ -87,25 +88,25 @@ public class MatchesFragment extends Fragment  {
                         rotateOpen(v);
                         UserBetsDialogFragment betsFragment = UserBetsDialogFragment.newInstance(userBets);
                         betsFragment.show(getChildFragmentManager(), "Bets Fragment");
-
                     }
                 });
 
-        mainActivityViewModel = new MainActivityViewModel();
-        mainActivityViewModel.getMatches().observe(getViewLifecycleOwner(), new Observer<Response>() {
+        matchesViewModel = new MatchesViewModel();
+        String token = getToken();
+        matchesViewModel.getMatches(token).observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
                 soccerBall.clearAnimation();
                 soccerBall.setVisibility(View.GONE);
                 rvRelativeLayout.setVisibility(View.VISIBLE);
-                setObjectsList(response.getGames(), response.getGames(), headers);
-                liveGames = response.getGames();
-                upcomingGames = response.getGames();
+                setObjectsList(response.getLive(), response.getUpcoming(), headers);
+                liveGames = response.getLive();
+                upcomingGames = response.getUpcoming();
                 currentMatchesAdapter = new MatchesAdapter(list, new MatchesAdapter.ClickListener() {
                     @Override
                     public void onCoefClick(View buttonClicked, int position, MatchesAdapter.ButtonType type) {
                         bottomSheet[0] = new BottomSheetLayout();
-                        showBottomSheet(type, position, response.getGames(), bottomSheet[0]);
+                        showBottomSheet(type, position, bottomSheet[0]);
                     }
                 });
 
@@ -127,10 +128,9 @@ public class MatchesFragment extends Fragment  {
                 list.add(liveGames.get(i));
             }
         }
-
     }
 
-    private void showBottomSheet(MatchesAdapter.ButtonType type, int positionInList, List<Game> games, BottomSheetLayout bottomSheet) {
+    private void showBottomSheet(MatchesAdapter.ButtonType type, int positionInList, BottomSheetLayout bottomSheet) {
         Bundle bundle = new Bundle();
         int exactPosition = 0;
         List<Game> clickedGamesList = null;
@@ -159,7 +159,7 @@ public class MatchesFragment extends Fragment  {
         }
 
         bottomSheet.setArguments(bundle);
-        bottomSheet.show(getFragmentManager(), "ModalBottomSheet");
+        bottomSheet.show(getChildFragmentManager(), "ModalBottomSheet");
     }
 
     private void rotateOpen(View view) {
@@ -194,6 +194,12 @@ public class MatchesFragment extends Fragment  {
         rotate.setFillAfter(true);
 
         view.startAnimation(rotate);
+    }
+
+    private String getToken() {
+        SharedPreferences prefs = getActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        String token = prefs.getString("token", null);
+        return token;
     }
 
 }

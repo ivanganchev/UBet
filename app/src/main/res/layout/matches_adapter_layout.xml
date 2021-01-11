@@ -11,29 +11,29 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@drawable/matches_sections_background"
         android:weightSum="10"
         >
         <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:orientation="vertical"
-            android:layout_weight="8">
+            android:layout_weight="7">
             <TextView
                 android:id="@+id/firstTeam"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="top|center"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:gravity="top|center"
                 android:layout_margin="10dp"
                 android:textSize="15sp"
                 android:textColor="#FFFFFF"/>
 
             <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center|center_vertical"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:gravity="center|center_vertical"
                 android:layout_margin="10dp"
                 android:text="VS"
                 android:textSize="15sp"
@@ -42,25 +42,66 @@
 
             <TextView
                 android:id="@+id/secondTeam"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:layout_margin="10dp"
-                android:layout_gravity="bottom|center"
+                android:gravity="bottom|center"
                 android:textSize="15sp"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF"
+                />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/matchLiveTime"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="45'"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_weight="2"
-            android:textColor="#FFFFFF"
-            />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="3">
+            <TextView
+                android:id="@+id/homeScore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:gravity="center_vertical|center_horizontal"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="|"
+                android:textSize="15sp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:gravity="center_vertical|center_horizontal"
+                />
+            <TextView
+                android:id="@+id/awayScore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:gravity="center_vertical|center_horizontal"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+            <TextView
+                android:id="@+id/matchLiveTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="45'"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

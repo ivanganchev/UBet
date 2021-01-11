@@ -74,6 +74,11 @@ public class MatchesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             TextView drawCoef = vhItem.drawCoef;
             drawCoef.setText(Double.toString(game.getDrawCoef()));
+
+            TextView firstTeamScore = vhItem.firstTeamScore;
+            firstTeamScore.setText(Integer.toString(game.getFirstTeamScore()));
+            TextView secondTeamScore = vhItem.secondTeamScore;
+            secondTeamScore.setText(Integer.toString(game.getSecondTeamScore()));
         }
     }
 
@@ -108,6 +113,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView firstTeamCoef;
         TextView secondTeamCoef;
         TextView drawCoef;
+        TextView firstTeamScore;
+        TextView secondTeamScore;
         LinearLayout firstTeamLayout;
         LinearLayout secondTeamLayout;
         LinearLayout drawLayout;
@@ -120,6 +127,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             firstTeamCoef = itemView.findViewById(R.id.firstTeamCoef);
             secondTeamCoef = itemView.findViewById(R.id.secondTeamCoef);
             drawCoef = itemView.findViewById(R.id.drawTeamCoef);
+            firstTeamScore = itemView.findViewById(R.id.homeScore);
+            secondTeamScore = itemView.findViewById(R.id.awayScore);
             firstTeamLayout = itemView.findViewById(R.id.firstTeamLayout);
             firstTeamLayout.setOnClickListener(this);
             secondTeamLayout = itemView.findViewById(R.id.secondTeamLayout);
@@ -154,5 +163,10 @@ public class MatchesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         FIRSTTEAMCOEF,
         SECONDTEAMCOEF,
         DRAW
+    }
+
+    public void clearItems() {
+        listItems.clear();
+        notifyDataSetChanged();
     }
 }

@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.ubet.Classes.HeaderItem;
 import com.example.ubet.Classes.UserBet;
@@ -49,6 +50,8 @@ public class MatchesFragment extends Fragment  {
     List<UserBet> userBets;
     ImageView soccerBall;
     RelativeLayout rvRelativeLayout;
+    SwipeRefreshLayout matchesSwipeRefreshLayout;
+    BottomSheetLayout bottomSheet;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,8 +68,9 @@ public class MatchesFragment extends Fragment  {
         userBets = new ArrayList<UserBet>();
         soccerBall = (ImageView) view.findViewById(R.id.soccerBall);
         rvRelativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayoutRecyclerView);
+        matchesSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.matchesSwipeRefreshLayout);
 
-        final BottomSheetLayout[] bottomSheet = new BottomSheetLayout[1];
+
         FragmentManager fm = getChildFragmentManager();
 
         ArrayList<UserBet> userBets = new ArrayList<UserBet>();
@@ -99,27 +103,49 @@ public class MatchesFragment extends Fragment  {
                 soccerBall.clearAnimation();
                 soccerBall.setVisibility(View.GONE);
                 rvRelativeLayout.setVisibility(View.VISIBLE);
-                setObjectsList(response.getLive(), response.getUpcoming(), headers);
-                liveGames = response.getLive();
-                upcomingGames = response.getUpcoming();
-                currentMatchesAdapter = new MatchesAdapter(list, new MatchesAdapter.ClickListener() {
+
+                setGames(response);
+                setMatchesAdapter();
+
+                matchesSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
-                    public void onCoefClick(View buttonClicked, int position, MatchesAdapter.ButtonType type) {
-                        bottomSheet[0] = new BottomSheetLayout();
-                        showBottomSheet(type, position, bottomSheet[0]);
+                    public void onRefresh() {
+                        matchesViewModel.getMatches(token).observe(getViewLifecycleOwner(), new Observer<Response>() {
+                            @Override
+                            public void onChanged(Response response) {
+                                matchesSwipeRefreshLayout.setRefreshing(false);
+                                currentMatchesAdapter.clearItems();
+
+                                setGames(response);
+                                setMatchesAdapter();
+                            }
+                        });
                     }
                 });
-
-                rvMatches.setAdapter(currentMatchesAdapter);
-                rvMatches.scheduleLayoutAnimation();
-                rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
             }
         });
 
         return view;
     }
 
+    private void setGames(Response response) {
+        setObjectsList(response.getLive(), response.getUpcoming(), headers);
+        liveGames = response.getLive();
+        upcomingGames = response.getUpcoming();
+    }
 
+    private void setMatchesAdapter() {
+        currentMatchesAdapter = new MatchesAdapter(list, new MatchesAdapter.ClickListener() {
+            @Override
+            public void onCoefClick(View buttonClicked, int position, MatchesAdapter.ButtonType type) {
+                bottomSheet = new BottomSheetLayout();
+                showBottomSheet(type, position, bottomSheet);
+            }
+        });
+        rvMatches.setAdapter(currentMatchesAdapter);
+        rvMatches.scheduleLayoutAnimation();
+        rvMatches.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
     private void setObjectsList(List<Game> liveGames, List<Game> upcomingGames,  List<HeaderItem> headers) {
 
         List<List<Game>> games = new ArrayList<List<Game>>();

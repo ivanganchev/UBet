@@ -26,7 +26,7 @@
             android:paddingTop="13dp"
             android:paddingEnd="20dp"
             android:paddingBottom="13dp"
-            android:textColorHighlight="#FFB700"
+            android:textColorHighlight="#cc6699"
             android:textColorLink="#FFFFFF"
             android:textCursorDrawable="@drawable/cursor_color" />
 
@@ -42,7 +42,7 @@
             android:paddingTop="13dp"
             android:paddingEnd="20dp"
             android:paddingBottom="13dp"
-            android:textColorLink="#FFB700"
+            android:textColorLink="#cc6699"
             android:textCursorDrawable="@drawable/cursor_color"
             app:layout_constraintTop_toBottomOf="@+id/usernameInput" />
 

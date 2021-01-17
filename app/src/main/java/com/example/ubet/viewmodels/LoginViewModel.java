@@ -5,27 +5,22 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ubet.models.TokenResponse;
-import com.example.ubet.repository.LoginRepository;
-import com.example.ubet.repository.RegisterRepository;
+import com.example.ubet.repository.AuthenticationRepository;
 
 import okhttp3.RequestBody;
 
 public class LoginViewModel extends ViewModel {
     private MutableLiveData<TokenResponse> mutableLiveData;
-    private LoginRepository repo;
+    private AuthenticationRepository repo;
 
     public LoginViewModel() {
-        repo = new LoginRepository();
+        repo = new AuthenticationRepository();
     }
 
     public LiveData<TokenResponse> login(RequestBody body) {  
-        mutableLiveData = new MutableLiveData<TokenResponse>();
-        loginRequest(body);
+        mutableLiveData = repo.login(body);
 
         return mutableLiveData;
     }
 
-    private void loginRequest(RequestBody body) {
-        mutableLiveData = repo.login(body);
-    }
 }

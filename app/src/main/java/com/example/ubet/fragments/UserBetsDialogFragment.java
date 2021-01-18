@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ubet.Classes.UserBet;
 import com.example.ubet.R;
 import com.example.ubet.adapters.UserBetsAdapter;
+import com.example.ubet.models.Bet;
 
 import org.w3c.dom.Text;
 
@@ -31,14 +32,14 @@ public class UserBetsDialogFragment extends DialogFragment {
 
     TextView userBetTeam;
     RecyclerView userBetsRecyclerView;
-    List<UserBet> userBets;
+    List<Bet> userBets;
     TextView noBetsText;
 
     public UserBetsDialogFragment() {
 
     }
 
-    public static UserBetsDialogFragment newInstance(ArrayList<UserBet> userBets) {
+    public static UserBetsDialogFragment newInstance(ArrayList<Bet> userBets) {
         UserBetsDialogFragment frag = new UserBetsDialogFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("userBets", userBets);
@@ -60,7 +61,6 @@ public class UserBetsDialogFragment extends DialogFragment {
 
         userBets = getArguments().getParcelableArrayList("userBets");
         if(userBets.size() > 0) {
-
             noBetsText.setVisibility(View.GONE);
             UserBetsAdapter adapter = new UserBetsAdapter(userBets);
             userBetsRecyclerView = (RecyclerView) view.findViewById(R.id.activeBetsRecyclerView);

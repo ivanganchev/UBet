@@ -4,16 +4,29 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.ubet.Classes.UserBet;
+import com.example.ubet.models.Bet;
+import com.example.ubet.repository.BetsRepository;
+
+import java.util.ArrayList;
+
+import okhttp3.RequestBody;
 
 public class BetsViewModel extends ViewModel {
-    private final MutableLiveData<UserBet> userBetMutableLiveData = new MutableLiveData<UserBet>();
+    private MutableLiveData<String> mutableLiveDataBet;
+    private MutableLiveData<ArrayList<Bet>> mutableLiveDataBets;
+    private BetsRepository repo;
 
-    public void setUserBet(UserBet userBet) {
-        this.userBetMutableLiveData.setValue(userBet);
+    public BetsViewModel() {
+        repo = new BetsRepository();
     }
 
-    public LiveData<UserBet> getUserBet() {
-        return userBetMutableLiveData;
+    public LiveData<String> addBet(RequestBody body, String token) {
+        mutableLiveDataBet = repo.addBet(body, token);
+        return mutableLiveDataBet;
+    }
+
+    public LiveData<ArrayList<Bet>> getBets(String token, String areFinished) {
+        mutableLiveDataBets = repo.getBets(token, areFinished);
+        return mutableLiveDataBets;
     }
 }

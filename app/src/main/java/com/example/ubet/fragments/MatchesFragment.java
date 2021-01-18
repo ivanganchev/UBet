@@ -27,6 +27,7 @@ import com.example.ubet.Classes.UserBet;
 import com.example.ubet.R;
 import com.example.ubet.adapters.MatchesAdapter;
 import com.example.ubet.customLayout.BottomSheetLayout;
+import com.example.ubet.models.Bet;
 import com.example.ubet.models.Game;
 import com.example.ubet.models.Response;
 import com.example.ubet.viewmodels.BetsViewModel;
@@ -46,8 +47,7 @@ public class MatchesFragment extends Fragment  {
     List<HeaderItem> headers;
     ImageView userBetsButton;
     boolean layoutUp;
-    private BetsViewModel betsViewModel;
-    List<UserBet> userBets;
+    BetsViewModel betsViewModel;
     ImageView soccerBall;
     RelativeLayout rvRelativeLayout;
     SwipeRefreshLayout matchesSwipeRefreshLayout;
@@ -64,39 +64,35 @@ public class MatchesFragment extends Fragment  {
         list = new ArrayList<Object>();
         layoutUp = false;
         rvMatches = (RecyclerView) view.findViewById(R.id.matchesRecyclerView);
-        userBetsButton = (ImageView) view.findViewById(R.id.userBetsButton);
-        userBets = new ArrayList<UserBet>();
         soccerBall = (ImageView) view.findViewById(R.id.soccerBall);
         rvRelativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayoutRecyclerView);
         matchesSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.matchesSwipeRefreshLayout);
-
+        userBetsButton = (ImageView) view.findViewById(R.id.userBetsButton);
+        String token = getToken();
 
         FragmentManager fm = getChildFragmentManager();
-
-        ArrayList<UserBet> userBets = new ArrayList<UserBet>();
 
         soccerBall.setVisibility(View.VISIBLE);
         loadingAnimation(soccerBall);
 
-        betsViewModel = new ViewModelProvider(requireActivity()).get(BetsViewModel.class);
-        betsViewModel.getUserBet().observe(getViewLifecycleOwner(), new Observer<UserBet>() {
-                    @Override
-                    public void onChanged(UserBet userBet) {
-                        userBets.add(userBet);
-                    }
-                });
-
-                userBetsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        rotateOpen(v);
-                        UserBetsDialogFragment betsFragment = UserBetsDialogFragment.newInstance(userBets);
-                        betsFragment.show(getChildFragmentManager(), "Bets Fragment");
-                    }
-                });
-
         matchesViewModel = new MatchesViewModel();
-        String token = getToken();
+        betsViewModel = new BetsViewModel();
+
+        userBetsButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  rotateOpen(v);
+
+                  betsViewModel.getBets(token, "false").observe(getViewLifecycleOwner(), new Observer<ArrayList<Bet>>() {
+                      @Override
+                      public void onChanged(ArrayList<Bet> bets) {
+                          UserBetsDialogFragment betsFragment = UserBetsDialogFragment.newInstance(bets);
+                          betsFragment.show(getChildFragmentManager(), "Bets Fragment");
+                      }
+                  });
+              }
+        });
+
         matchesViewModel.getMatches(token).observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
             public void onChanged(Response response) {
@@ -173,16 +169,22 @@ public class MatchesFragment extends Fragment  {
         }
         switch(type) {
             case FIRSTTEAMCOEF:
-                bundle.putString("team", clickedGamesList.get(exactPosition).getFirstTeam());
+                bundle.putString("teamName", clickedGamesList.get(exactPosition).getFirstTeam());
                 bundle.putDouble("coef", clickedGamesList.get(exactPosition).getFirstTeamCoef());
+                bundle.putInt("teamInGame", 1);
+                bundle.putInt("teamId", clickedGamesList.get(exactPosition).getId());
                 break;
             case SECONDTEAMCOEF:
-                bundle.putString("team", clickedGamesList.get(exactPosition).getSecondTeam());
+                bundle.putString("teamName", clickedGamesList.get(exactPosition).getSecondTeam());
                 bundle.putDouble("coef", clickedGamesList.get(exactPosition).getSecondTeamCoef());
+                bundle.putInt("teamInGame", 2);
+                bundle.putInt("teamId", clickedGamesList.get(exactPosition).getId());
                 break;
             case DRAW:
-                bundle.putString("team", "Draw");
+                bundle.putString("teamName", "Draw");
                 bundle.putDouble("coef", clickedGamesList.get(exactPosition).getDrawCoef());
+                bundle.putInt("teamInGame", 3);
+                bundle.putInt("teamId", clickedGamesList.get(exactPosition).getId());
                 break;
             default:
                 break;

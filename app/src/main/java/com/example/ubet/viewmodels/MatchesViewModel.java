@@ -17,10 +17,7 @@ public class MatchesViewModel extends ViewModel {
     }
 
     public LiveData<Response> getMatches(String token) {
-        if(mutableLiveData == null)  {
-            mutableLiveData = repo.getMatches(token);
-        }
-
+        mutableLiveData = repo.getMatches(token);
         return mutableLiveData;
     }
 }

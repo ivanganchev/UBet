@@ -8,30 +8,39 @@ public class Game {
     @SerializedName("id")
     @Expose
     int id;
+
     @SerializedName("homeTeam")
     @Expose
     String firstTeam;
+
     @SerializedName("awayTeam")
     @Expose
     String secondTeam;
+
     @SerializedName("homeOdd")
     @Expose
     double firstTeamCoef;
+
     @SerializedName("awayOdd")
     @Expose
     double secondTeamCoef;
+
     @SerializedName("draw")
     @Expose
     double drawCoef;
+
     @SerializedName("homeScore")
     @Expose
     int firstTeamScore;
+
     @SerializedName("awayScore")
     @Expose
     int secondTeamScore;
+
     @SerializedName("liveResult")
     @Expose
     String liveResult;
+
     @SerializedName("href")
     @Expose
     String href;

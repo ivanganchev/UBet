@@ -8,15 +8,16 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="start"
+        android:fontFamily="@font/helvetica"
         android:text="Account"
-        android:textColor="#fff"
-        android:textSize="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textAllCaps="false"
+        android:textColor="@color/mainColor"
+        android:textSize="40sp"
+        android:layout_marginHorizontal="15dp"
+        />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -24,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -37,6 +38,8 @@
             android:layout_weight="1"
             android:background="@drawable/account_menu_button"
             android:gravity="center"
+            android:textAllCaps="false"
+            android:fontFamily="@font/helvetica"
             android:text="Info" />
 
         <Button
@@ -45,6 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/account_menu_button"
+            android:textAllCaps="false"
+            android:fontFamily="@font/helvetica"
             android:text="History" />
 
     </LinearLayout>
@@ -52,17 +57,20 @@
     <LinearLayout
         android:id="@+id/accountFragment"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="275dp"
         android:layout_gravity="center_horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/account_layout_background"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
         tools:layout_editor_absoluteX="74dp"
         android:orientation="horizontal">
-
+        <LinearLayout
+            android:id="@+id/canvas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
 

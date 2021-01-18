@@ -24,7 +24,7 @@ public class UserRepository {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                mutableLiveData.setValue(response.body());
+                mutableLiveData.setValue(response.body().toString());
             }
 
             @Override

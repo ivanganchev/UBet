@@ -73,13 +73,13 @@ public class RegisterFragment extends Fragment {
                 registerViewModel.register(finalizedBody).observe(getViewLifecycleOwner(), new Observer<TokenResponse>() {
                     @Override
                     public void onChanged(TokenResponse tokenResponse) {
+                        Toast.makeText(getContext(), tokenResponse.getMessage(), Toast.LENGTH_LONG).show();
                         for(int i = 0; i < registerInputs.size(); i++) {
                             if(registerInputs.get(i).getText().toString().equals("")) {
                                 shakeAnimation(registerInputs.get(i));
                             }
                         }
                         if(!username.equals("") && !email.equals("") && !password.equals("") && tokenResponse.getToken() != null) {
-                            Toast.makeText(getContext(), tokenResponse.getMessage(), Toast.LENGTH_LONG).show();
                             saveToken(tokenResponse.getToken());
                             startActivity(new Intent(getActivity(), MainActivity.class));
                             getActivity().finish();

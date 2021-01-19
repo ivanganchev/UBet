@@ -1,4 +1,4 @@
-package com.example.ubet.fragments;
+    package com.example.ubet.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,9 +23,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
 import com.example.ubet.R;
+import com.example.ubet.customLayout.BottomSheetLayout;
 import com.example.ubet.models.Bet;
 import com.example.ubet.viewmodels.UserViewModel;
 
@@ -42,6 +45,9 @@ public class MoneyAddingDialogFragment extends DialogFragment {
     LinearLayout addMoneyLayout;
     LinearLayout successLayout;
     UserViewModel userViewModel;
+
+
+    double amount = 0;
 
     public static MoneyAddingDialogFragment newInstance() {
         MoneyAddingDialogFragment fr = new MoneyAddingDialogFragment();
@@ -71,7 +77,7 @@ public class MoneyAddingDialogFragment extends DialogFragment {
                 if(moneyEditText.getText().toString().equals("")) {
                     shakeAnimation(moneyEditText);
                 } else {
-                    double amount = Double.parseDouble(moneyEditText.getText().toString());
+                    amount = Double.parseDouble(moneyEditText.getText().toString());
                     try {
                         final RequestBody finalizedBody = RequestBody.create(MediaType.parse("application/json"), getRequestBody(amount));
                         userViewModel.deposit(finalizedBody, getToken()).observe(getViewLifecycleOwner(), new Observer<String>() {

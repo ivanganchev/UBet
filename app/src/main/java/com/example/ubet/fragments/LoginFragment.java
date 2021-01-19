@@ -43,6 +43,7 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         registerButton = (Button) view.findViewById(R.id.registerButton);
         loginSubmit = (Button) view.findViewById(R.id.loginSubmit);

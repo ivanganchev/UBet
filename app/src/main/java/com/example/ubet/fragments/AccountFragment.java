@@ -68,6 +68,8 @@ public class AccountFragment extends Fragment {
         emailTextView = (TextView) view.findViewById(R.id.emailTextView);
         balanceTextView = (TextView) view.findViewById(R.id.balanceTextView);
 
+
+
         UserViewModel userViewModel = new UserViewModel();
         userViewModel.getUserInfo(getToken()).observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -75,6 +77,7 @@ public class AccountFragment extends Fragment {
                 usernameTextView.setText(user.getUsername().toString());
                 emailTextView.setText(user.getEmail().toString());
                 balanceTextView.setText(Double.toString(user.getBalance()));
+                setCurrentMoney(user.getBalance());
             }
         });
 
@@ -83,10 +86,11 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getChildFragmentManager();
-                MoneyAddingDialogFragment editNameDialogFragment = MoneyAddingDialogFragment.newInstance();
-                editNameDialogFragment.show(fm, "");
+                MoneyAddingDialogFragment moneyAddingDialogFragment = MoneyAddingDialogFragment.newInstance();
+                moneyAddingDialogFragment.show(fm, "");
             }
         });
+
 
         showAccountInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,5 +119,13 @@ public class AccountFragment extends Fragment {
         SharedPreferences prefs = getActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
         String token = prefs.getString("token", null);
         return token;
+    }
+
+    private void setCurrentMoney(double amount) {
+        SharedPreferences sharedPrefs = getContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+
+        editor.putString("balance", Double.toString(amount));
+        editor.commit();
     }
 }

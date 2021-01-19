@@ -42,17 +42,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             />
-
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:textAllCaps="false"
-            android:foreground="?attr/selectableItemBackground"
-            android:text="Edit"
-            android:fontFamily="@font/helvetica"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/blueish_main_color"
-            />
     </LinearLayout>
 
     <LinearLayout
@@ -92,16 +81,6 @@
             android:layout_weight="1"
             />
 
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/helvetica"
-            android:foreground="?attr/selectableItemBackground"
-            android:text="Edit"
-            android:textAllCaps="false"
-            android:background="@drawable/blueish_main_color"
-            />
     </LinearLayout>
 
     <LinearLayout

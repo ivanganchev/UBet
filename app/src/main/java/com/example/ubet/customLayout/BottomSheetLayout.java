@@ -82,7 +82,7 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
         betBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                money = (double) Math.round(progress * 0.01 * 888);
+                money = (double) Math.round(progress * 0.01 * Double.parseDouble(getMoney()));
 
                 DecimalFormat df = new DecimalFormat("###.#");
 
@@ -165,5 +165,11 @@ public class BottomSheetLayout extends BottomSheetDialogFragment {
         SharedPreferences prefs = getActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
         String token = prefs.getString("token", null);
         return token;
+    }
+
+    private String getMoney(){
+        SharedPreferences prefs = getActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        String money = prefs.getString("balance", null);
+        return money;
     }
 }

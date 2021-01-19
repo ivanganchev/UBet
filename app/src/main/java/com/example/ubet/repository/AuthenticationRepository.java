@@ -30,7 +30,17 @@ public class AuthenticationRepository {
         call.enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
-                mutableLiveData.setValue(response.body());
+                if(response.code() != 200) {
+                    Gson gson = new Gson();
+                    try {
+                        TokenResponse tRes = gson.fromJson(response.errorBody().string(), TokenResponse.class);
+                        mutableLiveData.setValue(tRes);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    mutableLiveData.setValue(response.body());
+                }
             }
 
             @Override
